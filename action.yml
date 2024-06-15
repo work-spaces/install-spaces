@@ -21,13 +21,13 @@ runs:
     - run: echo "working_path=${{steps.configure.outputs.working_path}}"
       shell: bash
     
-    - run: ls ${{steps.configure.outputs.working_path}}
+    - run: echo $(ls ${{steps.configure.outputs.working_path}})
       shell: bash
 
     - run: |
         curl -L https://github.com/work-spaces/workflows/releases/download/${{steps.configure.outputs.version}}/${{steps.configure.outputs.version}}-${{steps.configure.outputs.platform}}.zip \
         --header "authorization: Bearer ${{ github.token }}" \
-        --output "${{runner.temp}}/install-spaces/spaces.zip" \
+        --output "${{steps.configure.outputs.working_path}}/spaces.zip" \
         --location --silent --show-error --fail --retry 5
       shell: bash
 
