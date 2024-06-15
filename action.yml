@@ -33,6 +33,9 @@ runs:
     - run: unzip "${{steps.configure.outputs.working_path}}/spaces.zip" -d "${{steps.configure.outputs.working_path}}/bin"
       shell: bash
 
+    - run: echo "bin: ${{steps.configure.outputs.working_path}}/bin"
+      shell: bash
+
     - run: echo "${{steps.configure.outputs.working_path}}/bin" >> $GITHUB_PATH
       shell: bash
 
