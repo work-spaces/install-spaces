@@ -20,8 +20,7 @@ runs:
     - run: |
         curl https://github.com/work-spaces/workflows/releases/download/${{steps.configure.outputs.version}}/${{steps.configure.outputs.version}}-${{steps.configure.outputs.platform}}.zip \
         --header "authorization: Bearer ${{ github.token }}" \
-        --location --silent --show-error --fail --retry 5 \
-        --output "${{runner.temp}}/install-spaces/spaces.zip"
+        --location --silent --show-error --fail --retry 5 > "${{runner.temp}}/install-spaces/spaces.zip"
       shell: bash
 
     - run: unzip "${{runner.temp}}/install-spaces/spaces.zip" -d "${{runner.temp}}/install-spaces/bin"
