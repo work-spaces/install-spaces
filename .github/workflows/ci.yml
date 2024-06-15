@@ -12,10 +12,6 @@ jobs:
   install:
     name: Mac install spaces
     runs-on: macos-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu, macos, windows]
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
