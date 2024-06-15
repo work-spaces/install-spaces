@@ -18,9 +18,10 @@ runs:
     - run: mkdir -p "${{steps.configure.outputs.working_path}}/bin"
       shell: bash
 
-    - run: 
-      echo "working_path=${{steps.configure.outputs.working_path}}"
-      ls ${{steps.configure.outputs.working_path}}
+    - run: echo "working_path=${{steps.configure.outputs.working_path}}"
+      shell: bash
+    
+    - run: ls ${{steps.configure.outputs.working_path}}
       shell: bash
 
     - run: |
