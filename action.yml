@@ -32,12 +32,6 @@ runs:
     - run: unzip "${{runner.temp}}/install-spaces/spaces.zip" -d "${{runner.temp}}/install-spaces/bin"
       shell: bash
 
-    - run: echo "bin is ${{runner.temp}}/install-spaces/bin"
-      shell: bash
-    
-    - run: echo $(ls -Ralt ${{runner.temp}}/install-spaces)
-      shell: bash
-
     - run: echo "${{runner.temp}}/install-spaces/bin" >> $GITHUB_PATH
       shell: bash
 
