@@ -17,12 +17,6 @@ runs:
     - run: mkdir -p "${{runner.temp}}/install-spaces/bin"
       shell: bash
 
-    - run: echo "working_path=${{runner.temp}}/install-spaces"
-      shell: bash
-    
-    - run: echo $(ls ${{runner.temp}}/install-spaces)
-      shell: bash
-
     - run: |
         curl https://github.com/work-spaces/workflows/releases/download/${{steps.configure.outputs.version}}/${{steps.configure.outputs.version}}-${{steps.configure.outputs.platform}}.zip \
         --header "authorization: Bearer ${{ github.token }}" \
