@@ -13,25 +13,19 @@ runs:
         echo platform=${{runner.os == 'macOS' && 'macos-x86_64' || runner.os == 'Windows' && 'windows-x86_64' || 'linux-x86_64'}} >> $GITHUB_OUTPUT
         echo version=spaces-v0.2.0 >> $GITHUB_OUTPUT
         echo working_path=${{runner.temp}}/install-spaces >> $GITHUB_OUTPUT
-        echo suffix=zip >> $GITHUB_OUTPUT
       shell: bash
 
     - run: mkdir -p "${{steps.configure.outputs.working_path}}/bin"
       shell: bash
 
     - run: |
-        curl https://github.com/work-spaces/workflows/releases/download/${{steps.configure.outputs.version}}/${{steps.configure.outputs.version}}-${{steps.configure.outputs.platform}}.${{steps.configure.outputs.suffix}} \
+        curl https://github.com/work-spaces/workflows/releases/download/${{steps.configure.outputs.version}}/${{steps.configure.outputs.version}}-${{steps.configure.outputs.platform}}.zip \
         --header "authorization: Bearer ${{ github.token }}" \
-        --output "${{steps.configure.outputs.working_path}}/spaces.${{steps.configure.outputs.suffix}}" \
+        --output "${{steps.configure.outputs.working_path}}/spaces.zip" \
         --location --silent --show-error --fail --retry 5
       shell: bash
 
-    - run: unzip "${{steps.configure.outputs.working_path}}/spaces.${{steps.configure.outputs.suffix}}" -C "${{steps.configure.outputs.working_path}}/bin"
-      if: ${{runner.os != 'Windows'}}
-      shell: bash
-
-    - run: unzip "${{steps.configure.outputs.working_path}}/spaces.${{steps.configure.outputs.suffix}}" -O >"${{steps.configure.outputs.working_path}}/bin/spaces.exe" --force-local
-      if: ${{runner.os == 'Windows'}}
+    - run: unzip "${{steps.configure.outputs.working_path}}/spaces.zip" -d "${{steps.configure.outputs.working_path}}/bin"
       shell: bash
 
     - run: echo "${{steps.configure.outputs.working_path}}/bin" >> $GITHUB_PATH
