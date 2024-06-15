@@ -41,6 +41,9 @@ runs:
 
     - run: echo "${{steps.configure.outputs.working_path}}/bin" >> $GITHUB_PATH
       shell: bash
+    
+    - run: echo "PATH $GITHUB_PATH"
+      shell: bash
 
-    - run: spaces.exe --version
+    - run: spaces --version
       shell: bash
