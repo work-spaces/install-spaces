@@ -10,14 +10,13 @@ permissions:
 
 jobs:
   install:
-    name: Install spaces
+    name: Install spaces on ${{ matrix.os }}
     timeout-minutes: 45
     strategy:
+        fail-fast: false
         matrix:
-            os:
-                - windows-latest
-                - macos-latest
-    runs-on: ${{ matrix.os }}
+            os: [ macos, windows ]
+    runs-on: ${{ matrix.os }}-latest
     steps:
       - uses: actions/checkout@v4
       - name: test that spaces is not preinstalled
