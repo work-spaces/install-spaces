@@ -11,8 +11,13 @@ permissions:
 jobs:
   install:
     name: Mac install spaces
-    runs-on: macos-latest
     timeout-minutes: 45
+    strategy:
+        matrix:
+            os:
+                - windows-latest
+                - macos-latest
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - name: test that spaces is not preinstalled
