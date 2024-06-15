@@ -20,7 +20,7 @@ runs:
       shell: bash
 
     - run: |
-        curl https://github.com/work-spaces/worflows/releases/download/${{steps.configure.outputs.version}}/${{steps.configure.outputs.version}}-${{steps.configure.outputs.platform}}.${{steps.configure.outputs.suffix}} \
+        curl https://github.com/work-spaces/workflows/releases/download/${{steps.configure.outputs.version}}/${{steps.configure.outputs.version}}-${{steps.configure.outputs.platform}}.${{steps.configure.outputs.suffix}} \
         --header "authorization: Bearer ${{ github.token }}" \
         --output "${{steps.configure.outputs.working_path}}/spaces.${{steps.configure.outputs.suffix}}" \
         --location --silent --show-error --fail --retry 5
