@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   install:
-    name: Mac install spaces
+    name: Install spaces
     timeout-minutes: 45
     strategy:
         matrix:

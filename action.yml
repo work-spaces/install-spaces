@@ -18,6 +18,11 @@ runs:
     - run: mkdir -p "${{steps.configure.outputs.working_path}}/bin"
       shell: bash
 
+    - run: 
+      echo "working_path=${{steps.configure.outputs.working_path}}"
+      ls ${{steps.configure.outputs.working_path}}
+      shell: bash
+
     - run: |
         curl -L https://github.com/work-spaces/workflows/releases/download/${{steps.configure.outputs.version}}/${{steps.configure.outputs.version}}-${{steps.configure.outputs.platform}}.zip \
         --header "authorization: Bearer ${{ github.token }}" \
