@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+  workflow_dispatch:
+  schedule: [cron: "40 1 * * *"]
+
+permissions:
+  contents: read
+
+jobs:
+  install:
+    name: Mac install spaces
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu, macos, windows]
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: test that spaces is not preinstalled
+        run: |
+          if spaces --version; then which spaces; exit 1; fi
+        shell: bash
+      - name: install spaces
+        uses: ./
+      - run: spaces --version
