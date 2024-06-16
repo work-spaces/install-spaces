@@ -15,8 +15,8 @@ jobs:
     strategy:
         fail-fast: false
         matrix:
-            os: [ macos, windows, ubuntu ]
-    runs-on: ${{ matrix.os }}-latest
+            os: [ macos-latest, windows-latest, ubuntu-24.04 ]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - name: test that spaces is not preinstalled
