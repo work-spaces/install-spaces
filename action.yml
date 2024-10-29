@@ -11,14 +11,14 @@ runs:
     - id: configure
       run: |
         echo platform=${{runner.os == 'macOS' && 'macos-x86_64' || runner.os == 'Windows' && 'windows-x86_64' || 'linux-x86_64'}} >> $GITHUB_OUTPUT
-        echo version=spaces-v0.3.0 >> $GITHUB_OUTPUT
+        echo version=v0.8.11 >> $GITHUB_OUTPUT
       shell: bash
 
     - run: mkdir -p "${{runner.temp}}/install-spaces/bin"
       shell: bash
 
     - run: |
-        curl https://github.com/work-spaces/workflows/releases/download/${{steps.configure.outputs.version}}/${{steps.configure.outputs.version}}-${{steps.configure.outputs.platform}}.zip \
+        curl https://github.com/work-spaces/workflows/releases/download/${{steps.configure.outputs.version}}/spaces-${{steps.configure.outputs.platform}}-${{steps.configure.outputs.version}}.zip \
         --header "authorization: Bearer ${{ github.token }}" \
         --location --silent --show-error --fail --retry 5 > "${{runner.temp}}/install-spaces/spaces.zip"
       shell: bash
