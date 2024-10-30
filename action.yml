@@ -11,7 +11,7 @@ runs:
     - id: configure
       run: |
         echo platform=${{runner.os == 'macOS' && 'macos-x86_64' || runner.os == 'Windows' && 'windows-x86_64' || 'linux-x86_64'}} >> $GITHUB_OUTPUT
-        echo version=v0.8.13 >> $GITHUB_OUTPUT
+        echo version=v0.8.14 >> $GITHUB_OUTPUT
       shell: bash
 
     - run: mkdir -p "${{runner.temp}}/install-spaces/bin"
