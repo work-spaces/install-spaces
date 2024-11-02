@@ -66,7 +66,7 @@ detect_system
 
 # Determine the URL for the zip file
 if [ "$VERSION" == "latest" ]; then
-    VERSION=$(curl -fsSL "https://api.github.com/repos/$REPO/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")')
+    VERSION=$(curl -fsSL "https://api.github.com/repos/$REPO/releases/latest" | sed -n 's/.*"tag_name": "\(.*\)".*/\1/p')
 fi
 
 ZIP_NAME="${BINARY_NAME}-${SYSTEM}-${VERSION}.zip"  # Zip file named based on system type
