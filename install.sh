@@ -1,9 +1,8 @@
 #!/bin/bash
 
-REPO="work-spaces" 
-BINARY_NAME="spaces"  
-VERSION="latest"       
-INSTALL_DIR="$HOME/.local/bin"
+export REPO="work-spaces/spaces" 
+export BINARY_NAME="spaces"  
+export INSTALL_DIR="$HOME/.local/bin"
 
 # Ensure INSTALL_DIR exists
 mkdir -p "$INSTALL_DIR"
@@ -46,35 +45,23 @@ detect_system() {
     echo "Detected system: $SYSTEM"
 }
 
-# Function to download using curl or wget
-download() {
-    local url=$1
-    local output=$2
-    
-    if command -v curl &> /dev/null; then
-        curl -fsSL -o "$output" "$url"
-    elif command -v wget &> /dev/null; then
-        wget -q -O "$output" "$url"
-    else
-        echo "Error: Neither curl nor wget is available for downloading files."
-        exit 1
-    fi
-}
-
 # Run system detection
 detect_system
 
 # Determine the URL for the zip file
-if [ "$VERSION" == "latest" ]; then
-    VERSION=$(curl -fsSL "https://api.github.com/repos/$REPO/releases/latest" | sed -n 's/.*"tag_name": "\(.*\)".*/\1/p')
-fi
+LATEST_URL=https://api.github.com/repos/$REPO/releases/latest
+echo "Get version for latest release from: $LATEST_URL"
+curl -fsSL $LATEST_URL > latest.txt
+VERSION=$(curl -fsSL "$LATEST_URL" | sed -n 's/.*"tag_name": "\(.*\)".*/\1/p')
 
-ZIP_NAME="${BINARY_NAME}-${SYSTEM}-${VERSION}.zip"  # Zip file named based on system type
-DOWNLOAD_URL="https://github.com/$REPO/releases/download/$VERSION/$ZIP_NAME"
+ # Zip file named based on system type
+ZIP_NAME=$BINARY_NAME-$SYSTEM-$VERSION.zip 
+DOWNLOAD_URL=https://github.com/$REPO/releases/download/$VERSION/$ZIP_NAME
+echo "Downloading $DOWNLOAD_URL"
 
 # Download the zip file to a temporary location
 TEMP_ZIP=$(mktemp)
-download "$DOWNLOAD_URL" "$TEMP_ZIP"
+curl -fsSL -o "$TEMP_ZIP" "$DOWNLOAD_URL"
 
 # Check if download was successful
 if [ ! -s "$TEMP_ZIP" ]; then
