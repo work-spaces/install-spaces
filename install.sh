@@ -1,6 +1,7 @@
 #!/bin/bash
+set -e
 
-export REPO="work-spaces/spaces" 
+export REPO="work-spaces/spaces"
 export BINARY_NAME="spaces"  
 export INSTALL_DIR="$HOME/.local/bin"
 
@@ -70,6 +71,11 @@ if [ ! -s "$TEMP_ZIP" ]; then
 fi
 
 # Unzip the binary and move it to the installation directory
+if ! command -v unzip &> /dev/null; then
+    echo "Error: unzip is not installed. Please install it and try again."
+    rm "$TEMP_ZIP"
+    exit 1
+fi
 unzip -o "$TEMP_ZIP" -d /tmp
 chmod +x "/tmp/$BINARY_NAME"
 mv "/tmp/$BINARY_NAME" "$INSTALL_DIR/$BINARY_NAME"
