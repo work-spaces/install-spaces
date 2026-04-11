@@ -52,7 +52,6 @@ detect_system
 # Determine the URL for the zip file
 LATEST_URL=https://api.github.com/repos/$REPO/releases/latest
 echo "Get version for latest release from: $LATEST_URL"
-curl -fsSL $LATEST_URL > latest.txt
 VERSION=$(curl -fsSL "$LATEST_URL" | sed -n 's/.*"tag_name": "\(.*\)".*/\1/p')
 
  # Zip file named based on system type
