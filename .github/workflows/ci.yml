@@ -26,3 +26,16 @@ jobs:
       - name: install spaces
         uses: ./
       - run: spaces --version
+
+  ci:
+    name: CI
+    if: always()
+    needs: [install]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check all jobs passed
+        run: |
+          if [[ "${{ needs.install.result }}" != "success" ]]; then
+            echo "install job failed or was cancelled"
+            exit 1
+          fi
