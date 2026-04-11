@@ -14,19 +14,19 @@ runs:
         echo version=v0.15.34 >> $GITHUB_OUTPUT
       shell: bash
 
-    - run: mkdir -p "${{runner.temp}}/install-spaces/bin"
+    - run: mkdir -p "${{runner.tool_cache}}/install-spaces/bin"
       shell: bash
 
     - run: |
         curl https://github.com/work-spaces/spaces/releases/download/${{steps.configure.outputs.version}}/spaces-${{steps.configure.outputs.platform}}-${{steps.configure.outputs.version}}.zip \
         --header "authorization: Bearer ${{ github.token }}" \
-        --location --silent --show-error --fail --retry 5 > "${{runner.temp}}/install-spaces/spaces.zip"
+        --location --silent --show-error --fail --retry 5 > "${{runner.tool_cache}}/install-spaces/spaces.zip"
       shell: bash
 
-    - run: unzip "${{runner.temp}}/install-spaces/spaces.zip" -d "${{runner.temp}}/install-spaces/bin"
+    - run: unzip "${{runner.tool_cache}}/install-spaces/spaces.zip" -d "${{runner.tool_cache}}/install-spaces/bin"
       shell: bash
 
-    - run: echo "${{runner.temp}}/install-spaces/bin" >> $GITHUB_PATH
+    - run: echo "${{runner.tool_cache}}/install-spaces/bin" >> $GITHUB_PATH
       shell: bash
 
     - run: spaces --version
