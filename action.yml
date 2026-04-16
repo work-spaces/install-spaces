@@ -28,7 +28,8 @@ runs:
         EXPECTED_VERSION="${{steps.configure.outputs.version}}"
         if [[ -x "$TOOL_DIR/bin/spaces" ]]; then
           CURRENT_VERSION="$("$TOOL_DIR/bin/spaces" --version 2>/dev/null || echo "")"
-          if [[ "$CURRENT_VERSION" == *"$EXPECTED_VERSION"* ]]; then
+          EXPECTED_NO_PREFIX="${EXPECTED_VERSION#v}"
+          if [[ "$CURRENT_VERSION" == *"$EXPECTED_NO_PREFIX"* ]]; then
             echo "spaces $EXPECTED_VERSION already cached"
             echo "cache_hit=true" >> $GITHUB_OUTPUT
           else
