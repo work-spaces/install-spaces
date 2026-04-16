@@ -19,7 +19,7 @@ runs:
         else
           echo platform=linux-x86_64 >> $GITHUB_OUTPUT
         fi
-        echo version=v0.15.34 >> $GITHUB_OUTPUT
+        echo version=v0.15.36 >> $GITHUB_OUTPUT
       shell: bash
 
     - run: mkdir -p "${{runner.tool_cache}}/install-spaces/bin"
