@@ -22,16 +22,40 @@ runs:
         echo version=v0.15.36 >> $GITHUB_OUTPUT
       shell: bash
 
+    - id: check-cache
+      run: |
+        TOOL_DIR="${{runner.tool_cache}}/install-spaces"
+        EXPECTED_VERSION="${{steps.configure.outputs.version}}"
+        if [[ -x "$TOOL_DIR/bin/spaces" ]]; then
+          CURRENT_VERSION="$("$TOOL_DIR/bin/spaces" --version 2>/dev/null || echo "")"
+          EXPECTED_NO_PREFIX="${EXPECTED_VERSION#v}"
+          if [[ "$CURRENT_VERSION" == *"$EXPECTED_NO_PREFIX"* ]]; then
+            echo "spaces $EXPECTED_VERSION already cached"
+            echo "cache_hit=true" >> $GITHUB_OUTPUT
+          else
+            echo "Version mismatch (got '$CURRENT_VERSION', want '$EXPECTED_VERSION'). Re-downloading."
+            rm -rf "$TOOL_DIR"
+            echo "cache_hit=false" >> $GITHUB_OUTPUT
+          fi
+        else
+          echo "spaces not found in tool cache"
+          echo "cache_hit=false" >> $GITHUB_OUTPUT
+        fi
+      shell: bash
+
     - run: mkdir -p "${{runner.tool_cache}}/install-spaces/bin"
+      if: steps.check-cache.outputs.cache_hit != 'true'
       shell: bash
 
     - run: |
         curl https://github.com/work-spaces/spaces/releases/download/${{steps.configure.outputs.version}}/spaces-${{steps.configure.outputs.platform}}-${{steps.configure.outputs.version}}.zip \
         --header "authorization: Bearer ${{ github.token }}" \
         --location --silent --show-error --fail --retry 5 > "${{runner.tool_cache}}/install-spaces/spaces.zip"
+      if: steps.check-cache.outputs.cache_hit != 'true'
       shell: bash
 
     - run: unzip "${{runner.tool_cache}}/install-spaces/spaces.zip" -d "${{runner.tool_cache}}/install-spaces/bin"
+      if: steps.check-cache.outputs.cache_hit != 'true'
       shell: bash
 
     - run: echo "${{runner.tool_cache}}/install-spaces/bin" >> $GITHUB_PATH
