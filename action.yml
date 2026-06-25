@@ -19,7 +19,7 @@ runs:
         else
           echo platform=linux-x86_64 >> $GITHUB_OUTPUT
         fi
-        echo version=v0.15.48 >> $GITHUB_OUTPUT
+        echo version=v0.16.0 >> $GITHUB_OUTPUT
       shell: bash
 
     - id: check-cache
