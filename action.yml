@@ -11,7 +11,11 @@ runs:
     - id: configure
       run: |
         if [[ "${{ runner.os }}" == "macOS" ]]; then
-          echo platform=macos-x86_64 >> $GITHUB_OUTPUT
+          if [[ "${{ runner.arch }}" == "ARM64" ]]; then
+            echo platform=macos-aarch64 >> $GITHUB_OUTPUT
+          else
+            echo platform=macos-x86_64 >> $GITHUB_OUTPUT
+          fi
         elif [[ "${{ runner.os }}" == "Windows" ]]; then
           echo platform=windows-x86_64 >> $GITHUB_OUTPUT
         elif [[ "${{ runner.arch }}" == "ARM64" ]]; then
