@@ -2,7 +2,7 @@
 set -e
 
 export REPO="work-spaces/spaces"
-export BINARY_NAME="spaces"  
+export BINARY_NAME="spaces"
 export INSTALL_DIR="$HOME/.local/bin"
 
 # Ensure INSTALL_DIR exists
@@ -55,7 +55,7 @@ echo "Get version for latest release from: $LATEST_URL"
 VERSION=$(curl -fsSL "$LATEST_URL" | sed -n 's/.*"tag_name": "\(.*\)".*/\1/p')
 
  # Zip file named based on system type
-ZIP_NAME=$BINARY_NAME-$SYSTEM-$VERSION.zip 
+ZIP_NAME=$BINARY_NAME-$VERSION-$SYSTEM.zip
 DOWNLOAD_URL=https://github.com/$REPO/releases/download/$VERSION/$ZIP_NAME
 echo "Downloading $DOWNLOAD_URL"
 
